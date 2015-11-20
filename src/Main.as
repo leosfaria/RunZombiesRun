@@ -49,6 +49,7 @@
 		public function changeScene():void {
 			if(sceneName == "Main Title") scene = new MainTitle();
 			if(sceneName == "Main Menu") scene = new MainMenu();
+			if(sceneName == "Level1") scene = new Level1();
 			//if(sceneName == "Game Over") scene = new GameOver();
 		}
 	}
