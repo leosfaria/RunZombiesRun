@@ -10,7 +10,7 @@
 		var currentSpeed:Point;
 		
 		public function Player() {
-			speed = 5;	// pixels / second
+			speed = 5;	//pixels / update
 			currentSpeed = new Point(0,0);
 			
 			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
