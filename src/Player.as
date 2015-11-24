@@ -13,7 +13,7 @@
 		
 		public function Player() {
 			speed = 5				//pixels / update
-			runningMultiplier = 2	//2x mais rápido
+			runningMultiplier = 3	//3x mais rápido
 			running = false
 			currentSpeed = new Point(0,0)
 			
