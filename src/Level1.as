@@ -15,7 +15,7 @@
 			//End Walls
 			
 			//Start Player
-			setUpPlayer(910,650);
+			setUpPlayer(910,450);
 			//End Player
 		}
 		
