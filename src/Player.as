@@ -7,13 +7,13 @@
 	
 	public class Player extends MovieClip {
 		var speed:int;
-		var runningMultiplier:int;
+		var runningMultiplier:Number;
 		var currentSpeed:Point;
 		var running:Boolean;
 		
 		public function Player() {
 			speed = 5				//pixels / update
-			runningMultiplier = 4	//3x mais rápido
+			runningMultiplier = 2.25	//2,5x mais rápido
 			running = false
 			currentSpeed = new Point(0,0)
 			
