@@ -10,4 +10,4 @@ Done:
 - Lvl 1 
 	-> Background
 	-> Player com movimentação basica
-	-> Parede sem colisão
+	-> Parede com colisão basica
