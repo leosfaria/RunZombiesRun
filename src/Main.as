@@ -40,7 +40,7 @@
 					sceneChange = false;
 				}
 				
-				trace(myStage.mouseX + " y " + myStage.mouseY);
+				//trace(myStage.mouseX + " y " + myStage.mouseY);
 				
 				scene.updateScene();
 			}

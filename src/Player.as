@@ -7,11 +7,15 @@
 	
 	public class Player extends MovieClip {
 		var speed:int;
+		var runningMultiplier:int;
 		var currentSpeed:Point;
+		var running:Boolean;
 		
 		public function Player() {
-			speed = 5;	//pixels / update
-			currentSpeed = new Point(0,0);
+			speed = 5				//pixels / update
+			runningMultiplier = 4	//4x mais rápido
+			running = false
+			currentSpeed = new Point(0,0)
 			
 			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			Main.myStage.addEventListener(KeyboardEvent.KEY_UP, keyUpPressed);
@@ -23,8 +27,16 @@
 		}
 		
 		public function updatePlayer():void {
-			this.x += currentSpeed.x;
-			this.y += currentSpeed.y;
+			var currentMultiplier = 1;
+			
+			if(running && !currentSpeed.equals(new Point(0,0))) {
+				currentMultiplier = runningMultiplier;
+			}
+			
+			this.x += currentSpeed.x * currentMultiplier;
+			this.y += currentSpeed.y * currentMultiplier;
+			
+			trace(currentMultiplier)
 		}
 		
 		public function keyDownPressed(event:KeyboardEvent):void {
@@ -40,6 +52,9 @@
 			else if (event.keyCode == Keyboard.S || event.keyCode == Keyboard.DOWN) {		
 				currentSpeed.y = speed
 			}
+			else if (event.keyCode == Keyboard.SPACE) {		
+				running = true
+			}
 		}
 		
 		public function keyUpPressed(event:KeyboardEvent):void {
@@ -50,6 +65,9 @@
 			else if (event.keyCode == Keyboard.W || event.keyCode == Keyboard.UP ||
 					 event.keyCode == Keyboard.S || event.keyCode == Keyboard.DOWN) {		
 				currentSpeed.y = 0
+			}
+			else if (event.keyCode == Keyboard.SPACE) {		
+				running = false
 			}
 		}
 	}
