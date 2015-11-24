@@ -12,8 +12,8 @@
 		var running:Boolean;
 		
 		public function Player() {
-			speed = 5				//pixels / update
-			runningMultiplier = 2.25	//2,5x mais rápido
+			speed = 5					//pixels / update
+			runningMultiplier = 2.25	//2,25x mais rápido
 			running = false
 			currentSpeed = new Point(0,0)
 			
