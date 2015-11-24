@@ -28,7 +28,6 @@
 		}
 		
 		public function keyDownPressed(event:KeyboardEvent):void {
-			trace(currentSpeed)
 			if (event.keyCode == Keyboard.A || event.keyCode == Keyboard.LEFT) {		
 				currentSpeed.x = -speed
 			} 

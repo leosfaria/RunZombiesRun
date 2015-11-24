@@ -3,6 +3,7 @@
 	public class Level extends Scene {
 		var floor:Background;
 		var player:Player;
+		var wallList:Array;
 		
 		public function Level() {
 			//Start Background
@@ -13,9 +14,9 @@
 			Main.myStage.addChild(floor);
 			//End Background
 			
-			//Start Player
-			setUpPlayer(700,600);
-			//End Player
+			//Start Walls Array (Children push into array)
+			wallList = new Array();
+			//End Walls
 		}
 		
 		override public function removeScene():void { 
@@ -31,6 +32,7 @@
 		
 		override public function updateScene():void {
 			player.updatePlayer();
+			collision();
 		}
 		
 		public function setUpPlayer(x:int, y:int):void {
@@ -39,6 +41,15 @@
 			player.y = y;
 			
 			Main.myStage.addChild(player);
+		}
+		
+		private function collision():void {
+			for(var i = 0; i < wallList.length; i++) {
+				if(player.hitTestObject(wallList[i])) {
+					player.x -= player.currentSpeed.x
+					player.y -= player.currentSpeed.y
+				}
+			}
 		}
 	}
 }
