@@ -36,9 +36,6 @@
 			
 			this.x += currentSpeed.x * currentMultiplier;
 			this.y += currentSpeed.y * currentMultiplier;
-			
-			//trace(currentSpeed)
-			//trace(currentMultiplier)
 		}
 		
 		public function keyDownPressed(event:KeyboardEvent):void {

@@ -47,7 +47,15 @@
 			for(var i = 0; i < wallList.length; i++) {
 				if(player.hitTestObject(wallList[i])) {
 					player.x -= player.currentSpeed.x
-					player.y -= player.currentSpeed.y
+					
+					if(player.hitTestObject(wallList[i])) {
+						player.x += player.currentSpeed.x
+						player.y -= player.currentSpeed.y
+						
+						if(player.hitTestObject(wallList[i])) {
+							player.x -= player.currentSpeed.x
+						}
+					}
 				}
 			}
 		}
