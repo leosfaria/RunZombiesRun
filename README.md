@@ -10,4 +10,4 @@ Done:
 - Lvl 1 
 	- Background
 	- Player com movimentação (falta fazer subida ao colidir parede)
-	- Parede com colisão basica
+	- Parede com colisão 
