@@ -12,4 +12,4 @@ Done:
 	- Player com movimentação*
 	- Parede com colisão*
 
-* Em faze de testes e bug fix
+*Em faze de testes e bug fix
