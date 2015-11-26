@@ -46,14 +46,14 @@
 		private function collision():void {
 			for(var i = 0; i < wallList.length; i++) {
 				if(player.hitTestObject(wallList[i])) {
-					player.x -= player.currentSpeed.x
+					player.x -= player.currentSpeed.x * player.currentMultiplier
 					
 					if(player.hitTestObject(wallList[i])) {
-						player.x += player.currentSpeed.x
-						player.y -= player.currentSpeed.y
+						player.x += player.currentSpeed.x * player.currentMultiplier
+						player.y -= player.currentSpeed.y * player.currentMultiplier
 						
 						if(player.hitTestObject(wallList[i])) {
-							player.x -= player.currentSpeed.x
+							player.x -= player.currentSpeed.x * player.currentMultiplier
 						}
 					}
 				}
