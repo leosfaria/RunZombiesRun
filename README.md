@@ -9,5 +9,7 @@ Done:
 - Menu Principal com botao de iniciar jogo
 - Lvl 1 
 	- Background
-	- Player com movimentação (falta fazer subida ao colidir parede)
-	- Parede com colisão 
+	- Player com movimentação*
+	- Parede com colisão*
+
+* Em faze de testes e bug fix
