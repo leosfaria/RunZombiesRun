@@ -96,27 +96,41 @@
 		
 		private function getCurrentSpeed():Point {
 			var cSpeed = new Point(0,0)
+			var lastMoveKey = -1
+			var previousMoveKey = -1
 			
-			if(keyboardPressed.length > 1) {
-				if(keyboardPressed[keyboardPressed.length - 2] == Keyboard.LEFT) {
+			for(var i = keyboardPressed.length - 1; i >= 0; i--) {
+				if(previousMoveKey != -1) break;
+				
+				if(keyboardPressed[i] != Keyboard.SPACE) {
+					if(lastMoveKey == -1) {
+						lastMoveKey = keyboardPressed[i]
+					} else {
+						previousMoveKey = keyboardPressed[i]
+					}
+				}
+			}
+			
+			if(previousMoveKey != -1) {
+				if(previousMoveKey == Keyboard.LEFT) {
 					cSpeed.x = -speed;
-				} else if (keyboardPressed[keyboardPressed.length - 2] == Keyboard.RIGHT) {
+				} else if (previousMoveKey == Keyboard.RIGHT) {
 					cSpeed.x = speed;
-				} else if (keyboardPressed[keyboardPressed.length - 2] == Keyboard.UP) {
+				} else if (previousMoveKey == Keyboard.UP) {
 					cSpeed.y = -speed;
-				} else if (keyboardPressed[keyboardPressed.length - 2] == Keyboard.DOWN) {
+				} else if (previousMoveKey == Keyboard.DOWN) {
 					cSpeed.y = speed;
 				}
 			}
 				
-			if(keyboardPressed.length > 0) {
-				if(keyboardPressed[keyboardPressed.length - 1] == Keyboard.LEFT) {
+			if(lastMoveKey != -1) {
+				if(lastMoveKey == Keyboard.LEFT) {
 					cSpeed.x = -speed;
-				} else if (keyboardPressed[keyboardPressed.length - 1] == Keyboard.RIGHT) {
+				} else if (lastMoveKey == Keyboard.RIGHT) {
 					cSpeed.x = speed;
-				} else if (keyboardPressed[keyboardPressed.length - 1] == Keyboard.UP) {
+				} else if (lastMoveKey == Keyboard.UP) {
 					cSpeed.y = -speed;
-				} else if (keyboardPressed[keyboardPressed.length - 1] == Keyboard.DOWN) {
+				} else if (lastMoveKey == Keyboard.DOWN) {
 					cSpeed.y = speed;
 				}
 			}
