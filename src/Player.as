@@ -39,23 +39,19 @@
 		}
 		
 		public function keyDownPressed(event:KeyboardEvent):void {
-			if ((event.keyCode == Keyboard.A || event.keyCode == Keyboard.LEFT) && 
-				(keyboardPressed.length == 0 || keyboardPressed[keyboardPressed.length - 1] != Keyboard.LEFT)) {		
+			if (event.keyCode == Keyboard.A && (keyboardPressed.length == 0 || keyboardPressed[keyboardPressed.length - 1] != Keyboard.LEFT)) {		
 				keyboardPressed.push(Keyboard.LEFT);
 			} 
 			
-			if ((event.keyCode == Keyboard.D || event.keyCode == Keyboard.RIGHT) && 
-				(keyboardPressed.length == 0 || keyboardPressed[keyboardPressed.length - 1] != Keyboard.RIGHT)){		
+			if (event.keyCode == Keyboard.D && (keyboardPressed.length == 0 || keyboardPressed[keyboardPressed.length - 1] != Keyboard.RIGHT)){		
 				keyboardPressed.push(Keyboard.RIGHT);
 			}
 			
-			if ((event.keyCode == Keyboard.W || event.keyCode == Keyboard.UP) && 
-				(keyboardPressed.length == 0 || keyboardPressed[keyboardPressed.length - 1] != Keyboard.UP)){		
+			if (event.keyCode == Keyboard.W && (keyboardPressed.length == 0 || keyboardPressed[keyboardPressed.length - 1] != Keyboard.UP)){		
 				keyboardPressed.push(Keyboard.UP);
 			}
 			
-			if ((event.keyCode == Keyboard.S || event.keyCode == Keyboard.DOWN) &&
-				(keyboardPressed.length == 0 || keyboardPressed[keyboardPressed.length - 1] != Keyboard.DOWN)){
+			if (event.keyCode == Keyboard.S && (keyboardPressed.length == 0 || keyboardPressed[keyboardPressed.length - 1] != Keyboard.DOWN)){
 				keyboardPressed.push(Keyboard.DOWN);
 			}
 			
@@ -65,19 +61,19 @@
 		}
 		
 		public function keyUpPressed(event:KeyboardEvent):void {
-			if (event.keyCode == Keyboard.A || event.keyCode == Keyboard.LEFT) {
+			if (event.keyCode == Keyboard.A) {
 				removeFromKeyboardPressed(Keyboard.LEFT);
 			}
 			
-			if (event.keyCode == Keyboard.D || event.keyCode == Keyboard.RIGHT) {
+			if (event.keyCode == Keyboard.D) {
 				removeFromKeyboardPressed(Keyboard.RIGHT);
 			}
 			
-			if (event.keyCode == Keyboard.W || event.keyCode == Keyboard.UP) {
+			if (event.keyCode == Keyboard.W) {
 				removeFromKeyboardPressed(Keyboard.UP);
 			}
 			
-			if (event.keyCode == Keyboard.S || event.keyCode == Keyboard.DOWN) {
+			if (event.keyCode == Keyboard.S) {
 				removeFromKeyboardPressed(Keyboard.DOWN);
 			}
 			
