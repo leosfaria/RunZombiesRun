@@ -8,6 +8,7 @@
 	public class Player extends MovieClip {
 		var keyboardPressed:Array;
 		
+		var lastMovingCurrentSpeed:Point;
 		var currentSpeed:Point;
 		var currentMultiplier:int;
 		
@@ -16,7 +17,9 @@
 		
 		public function Player() {
 			keyboardPressed = new Array();
-						
+			
+			lastMovingCurrentSpeed = new Point(0,0);
+			
 			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			Main.myStage.addEventListener(KeyboardEvent.KEY_UP, keyUpPressed);
 		}
@@ -28,7 +31,8 @@
 		
 		public function updatePlayer():void {
 			currentMultiplier = 1;
-			currentSpeed = getCurrentSpeed();			
+			currentSpeed = getCurrentSpeed();
+			rotation = getRotation();
 			
 			if(keyboardPressed.indexOf(Keyboard.SPACE) >= 0 && !currentSpeed.equals(new Point(0,0))) {
 				currentMultiplier = runningMultiplier;
@@ -82,6 +86,10 @@
 			}
 		}
 		
+		private function getRotation():Number {			
+			return Math.atan2(-lastMovingCurrentSpeed.y,-lastMovingCurrentSpeed.x) * 180/Math.PI;
+		}
+		
 		private function removeFromKeyboardPressed(key:uint):void {
 			var index = keyboardPressed.indexOf(key)
 				
@@ -129,6 +137,11 @@
 				} else if (lastMoveKey == Keyboard.DOWN) {
 					cSpeed.y = speed;
 				}
+			}
+			
+			if(cSpeed.x != 0 || cSpeed.y != 0) {
+				lastMovingCurrentSpeed.x = cSpeed.x
+				lastMovingCurrentSpeed.y = cSpeed.y
 			}
 			
 			return cSpeed;
