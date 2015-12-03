@@ -14,6 +14,5 @@ Done:
 - Lvl 1 
 	- Background
 	- Player com movimentação
-	- Parede com colisão*
-
-*Em faze de testes e bug fix
+	- Parede com colisão
+	- Saída
