@@ -5,7 +5,9 @@
 	public class Level extends Scene {
 		var floor:Background;
 		var player:Player;
+		var exit:Exit;
 		var wallList:Array;
+		var nextLevel:String;
 		
 		public function Level() {
 			//Start Background
@@ -30,6 +32,10 @@
 			player.removePlayer();
 			Main.myStage.removeChild(player);
 			//End Player
+			
+			//Start Exit
+			Main.myStage.removeChild(exit);
+			//End Exit
 		}
 		
 		override public function updateScene():void {
@@ -45,16 +51,28 @@
 			Main.myStage.addChild(player);
 		}
 		
+		public function setUpExit(x:int, y:int):void {
+			exit = new Exit();
+			exit.x = x;
+			exit.y = y;
+			
+			Main.myStage.addChild(exit);
+		}
+		
 		private function checkCollision():void {
 			for(var i = 0; i < wallList.length; i++) {
 				playerCollision(wallList[i])
+			}
+			
+			if(player.hitBox.hitTestObject(exit)) {
+				Main.sceneChange = true
+				Main.sceneName = nextLevel
 			}
 		}
 		
 		private function playerCollision(obj:MovieClip):void {
 			var stillColliding = false
 			
-			trace(isPlayerGoingAwayFromCollision(obj))
 			if(player.hitBox.hitTestObject(obj) && !isPlayerGoingAwayFromCollision(obj)) {
 				player.x -= player.currentSpeed.x * player.currentMultiplier
 				

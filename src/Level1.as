@@ -17,6 +17,12 @@
 			//Start Player
 			setUpPlayer(910,450);
 			//End Player
+			
+			//Start Exit
+			setUpExit(100,70);
+			//End Exit
+			
+			nextLevel = "Level1"
 		}
 		
 		override public function removeScene():void { 
