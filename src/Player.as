@@ -151,6 +151,11 @@
 				}
 			}
 			
+			if(cSpeed.x != 0 && cSpeed.y != 0) {
+				cSpeed.x = Math.abs(Math.cos(45)) * cSpeed.x
+				cSpeed.y = Math.abs(Math.sin(45)) * cSpeed.y
+			}
+			
 			if(cSpeed.x != 0 || cSpeed.y != 0) {
 				lastMovingCurrentSpeed.x = cSpeed.x
 				lastMovingCurrentSpeed.y = cSpeed.y
