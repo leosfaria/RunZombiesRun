@@ -19,7 +19,7 @@
 			keyboardPressed = new Array();
 			
 			lastMovingCurrentSpeed = new Point(0,0);
-			
+						
 			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			Main.myStage.addEventListener(KeyboardEvent.KEY_UP, keyUpPressed);
 		}
@@ -37,6 +37,8 @@
 			if(keyboardPressed.indexOf(Keyboard.SPACE) >= 0 && !currentSpeed.equals(new Point(0,0))) {
 				currentMultiplier = runningMultiplier;
 			}
+			
+			setAnimation();
 			
 			this.x += currentSpeed.x * currentMultiplier;
 			this.y += currentSpeed.y * currentMultiplier;
@@ -86,8 +88,18 @@
 			}
 		}
 		
+		private function setAnimation():void {
+			if(currentSpeed.x == 0 && currentSpeed.y == 0) {
+				gotoAndStop('idle');
+			} else if(currentMultiplier == 1) {
+				gotoAndStop('walk');
+			} else {
+				gotoAndStop('run');
+			}
+		}
+		
 		private function getRotation():Number {			
-			return Math.atan2(-lastMovingCurrentSpeed.y,-lastMovingCurrentSpeed.x) * 180/Math.PI;
+			return Math.atan2(lastMovingCurrentSpeed.x,-lastMovingCurrentSpeed.y) * 180/Math.PI;
 		}
 		
 		private function removeFromKeyboardPressed(key:uint):void {
