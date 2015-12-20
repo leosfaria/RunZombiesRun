@@ -7,6 +7,7 @@
 		var player:Player;
 		var exit:Exit;
 		var wallList:Array;
+		var zombieList:Array;
 		var nextLevel:String;
 		
 		public function Level() {
@@ -21,6 +22,10 @@
 			//Start Walls Array (Children push into array)
 			wallList = new Array();
 			//End Walls
+			
+			//Start Zombies Array (Children push into array)
+			zombieList = new Array();
+			//End Zombies
 		}
 		
 		override public function removeScene():void { 
@@ -40,6 +45,11 @@
 		
 		override public function updateScene():void {
 			player.updatePlayer();
+			
+			for (var j = 0; j < zombieList.length ; j++){
+				zombieList[j].updateZombie(player);
+			}
+			
 			checkCollision();
 		}
 		
@@ -62,6 +72,20 @@
 		private function checkCollision():void {
 			for(var i = 0; i < wallList.length; i++) {
 				playerCollision(wallList[i])
+			}
+			
+			for(var j = 0; j < zombieList.length; j++) {
+				if(player.hitBox.hitTestObject(zombieList[j].hitDetectionArea)) {
+					//trace('Ele me viu! O.O')
+					zombieList[j].startHuting = true
+				}
+				
+				if(player.hitBox.hitTestObject(zombieList[j].hitBox)) {
+					//trace('Morri!')
+					
+					Main.sceneChange = true
+					Main.sceneName = nextLevel
+				}
 			}
 			
 			if(player.hitBox.hitTestObject(exit)) {

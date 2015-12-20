@@ -14,6 +14,15 @@
 			wallList.push(wall);
 			//End Walls
 			
+			//Start Zombies
+			var zombie = new Zombie1();
+			zombie.x = 200;
+			zombie.y = 200;
+			
+			Main.myStage.addChild(zombie);
+			zombieList.push(zombie);
+			//End Zombies
+			
 			//Start Player
 			setUpPlayer(910,450);
 			//End Player
@@ -29,10 +38,16 @@
 			super.removeScene();
 			
 			//Start Walls
-			for (var i = 0; i < 1 ; i++){
+			for (var i = 0; i < wallList.length ; i++){
 				Main.myStage.removeChild(wallList[i]);
 			}
 			//End Walls
+			
+			//Start Zombies
+			for (var j = 0; j < zombieList.length ; j++){
+				Main.myStage.removeChild(zombieList[j]);
+			}
+			//End Zombies
 		}
 	}
 }
