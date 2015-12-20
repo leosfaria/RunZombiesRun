@@ -16,3 +16,4 @@ Done:
 	- Player com movimentação
 	- Parede com colisão
 	- Saída
+	- Zumbi inicial
