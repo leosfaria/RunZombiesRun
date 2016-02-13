@@ -16,7 +16,7 @@
 		var gridKeys:Array;
 		var oldPositionPlayer:Point;
 		
-		public static var gridBlocksSize = 20; 
+		public static var gridBlocksSize = 30; 
 		
 		//Debug vars
 		var blocksPathfinding:Array;
@@ -46,6 +46,7 @@
 			zombieBlocksToPlayer = new Array();
 			//End Debug Vars
 			
+			gridPath = {};
 			oldPositionPlayer = new Point(0,0);
 		}
 		
@@ -67,25 +68,21 @@
 		override public function updateScene():void {
 			player.updatePlayer();
 			
-			//drawGrid();
-			
 			for (var j = 0; j < zombieList.length ; j++){
-				zombieList[j].updateZombie(player);
+				zombieList[j].updateZombie();
+				zombieList[j].updateDistanceToPlayer(gridPath);
+				
+				zombieList[j].pathToPlayer = new Array();
+				calculatePathToPlayer(zombieList[j].gridIndex.x, zombieList[j].gridIndex.y, zombieList[j].distanceToPlayer, j);
+				drawZombiePath(j);
 			}
 			
 			checkCollision();
 			
 			if(!oldPositionPlayer.equals(player.gridIndex)) {
-				var init = getTimer();
+				//var init = getTimer();
 				pathfinding();
-				trace("Time Path Maped em ms: " + (getTimer() - init));
-				
-				init = getTimer();
-				zombieList[0].pathToPlayer = new Array();
-				calculatePathToPlayer(zombieList[0].gridIndex.x, zombieList[0].gridIndex.y, 0);
-				trace("Time Zumbie path maped em ms: " + (getTimer() - init));
-				
-				drawZombiePath(0);
+				//trace("Time Path Maped em ms: " + (getTimer() - init));
 			}
 			
 			oldPositionPlayer.copyFrom(player.gridIndex);
@@ -129,28 +126,34 @@
 			}
 		}
 		
-		private function calculatePathToPlayer(xPath:Number, yPath:Number, zombieIndex:Number):void {
-			var distance = gridPath[xPath + ',' + yPath];
+		private function calculatePathToPlayer(xPath:int, yPath:int, oldDistance:int, zombieIndex:int):void {
+			var distance;
+			
+			if(gridPath.hasOwnProperty(xPath + ',' + yPath)) {
+				distance = gridPath[xPath + ',' + yPath];
+			} else {
+				distance = oldDistance;
+			}
 			
 			zombieList[zombieIndex].pathToPlayer.push(new Point(xPath, yPath));
 			
 			if(distance != 0) {
 				if ( isNewIndexCloserThanMe((xPath - 1) + ',' + yPath, distance) ){
-					calculatePathToPlayer(xPath - 1, yPath, zombieIndex);
+					calculatePathToPlayer(xPath - 1, yPath, distance, zombieIndex);
 				} else if ( isNewIndexCloserThanMe((xPath + 1) + ',' + yPath, distance) ){
-					calculatePathToPlayer(xPath + 1, yPath, zombieIndex);	   
+					calculatePathToPlayer(xPath + 1, yPath, distance, zombieIndex);	   
 				} else if ( isNewIndexCloserThanMe(xPath + ',' + (yPath - 1), distance) ){
-					calculatePathToPlayer(xPath, yPath - 1, zombieIndex);   
+					calculatePathToPlayer(xPath, yPath - 1, distance, zombieIndex);   
 				} else if ( isNewIndexCloserThanMe(xPath + ',' + (yPath + 1), distance) ){
-					calculatePathToPlayer(xPath, yPath + 1, zombieIndex);
+					calculatePathToPlayer(xPath, yPath + 1, distance, zombieIndex);
 				} else if ( isNewIndexCloserThanMe((xPath + 1) + ',' + (yPath + 1), distance) ){
-					calculatePathToPlayer(xPath + 1, yPath + 1, zombieIndex);
+					calculatePathToPlayer(xPath + 1, yPath + 1, distance, zombieIndex);
 				} else if ( isNewIndexCloserThanMe((xPath + 1) + ',' + (yPath - 1), distance) ){
-					calculatePathToPlayer(xPath + 1, yPath - 1, zombieIndex);
+					calculatePathToPlayer(xPath + 1, yPath - 1, distance, zombieIndex);
 				} else if ( isNewIndexCloserThanMe((xPath - 1) + ',' + (yPath + 1), distance) ){
-					calculatePathToPlayer(xPath - 1, yPath + 1, zombieIndex);
+					calculatePathToPlayer(xPath - 1, yPath + 1, distance, zombieIndex);
 				} else if ( isNewIndexCloserThanMe((xPath - 1) + ',' + (yPath - 1), distance) ){
-					calculatePathToPlayer(xPath - 1, yPath - 1, zombieIndex);
+					calculatePathToPlayer(xPath - 1, yPath - 1, distance, zombieIndex);
 				}
 			}
 		}

@@ -8,7 +8,9 @@
 		
 		var currentSpeed:Point;
 		var gridIndex:Point;
+		
 		var pathToPlayer:Array;
+		var distanceToPlayer:int;
 		
 		public function Zombie() {
 			//Night creatures call
@@ -23,18 +25,24 @@
 			pathToPlayer = new Array();
 		}
 		
-		public function updateZombie(player:Player):void {
+		public function updateZombie():void {
 			updateGridIndex();
 			
 			if(startHuting) {
-				goHunting(player)
+				goHunting()
 			}
 		}
 		
-		public function goHunting(player:Player):void {
+		public function updateDistanceToPlayer(gridPath:Object):void {
+			if(gridPath.hasOwnProperty(this.gridIndex.x + ',' + this.gridIndex.y)) {
+				distanceToPlayer = gridPath[this.gridIndex.x + ',' + this.gridIndex.y]
+			}
+		}
+		
+		public function goHunting():void {
 			//trace('Brains.......')
-			this.rotation = getRotation(player)
-			currentSpeed = getCurrentSpeed(player)
+			currentSpeed = getCurrentSpeed()
+			this.rotation = getRotation()
 			
 			this.x += currentSpeed.x
 			this.y += currentSpeed.y
@@ -45,26 +53,43 @@
 			this.gridIndex.y = (int) (this.y / Level.gridBlocksSize);
 		}
 		
-		private function getRotation(player:Player):Number {			
-			return Math.atan2(this.x - player.x, player.y - this.y) * 180/Math.PI;
+		private function getRotation():Number {			
+			return Math.atan2(-currentSpeed.x, currentSpeed.y) * 180/Math.PI;
 		}
 		
-		private function getCurrentSpeed(player:Player):Point {
+		private function getCurrentSpeed():Point {
 			var cSpeed = new Point(0,0)
 			
-			if(player.x - this.x > 0) {
-				cSpeed.x = speed
-			} else {
-				cSpeed.x = -speed
-			}
-			
-			if(player.y - this.y > 0) {
-				cSpeed.y = speed
-			} else {
-				cSpeed.y = -speed
+			if(pathToPlayer.length > 1) {
+				var xPath = pathToPlayer[1].x * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+				var yPath = pathToPlayer[1].y * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+				
+				if(xPath - this.x > 0) {
+					cSpeed.x = speed
+				} else {
+					cSpeed.x = -speed
+				}
+				
+				if ( willPassTarget(xPath, this.x, cSpeed.x) ) {
+					cSpeed.x = 0
+				}
+				
+				if(yPath - this.y > 0) {
+					cSpeed.y = speed
+				} else {
+					cSpeed.y = -speed
+				}
+				
+				if ( willPassTarget(yPath, this.y, cSpeed.y) ) {
+					cSpeed.y = 0
+				}
 			}
 			
 			return cSpeed
+		}
+		
+		private function willPassTarget(targetAxis:int, currentAxis:int, speed:int):Boolean {
+			return (targetAxis > currentAxis && targetAxis < currentAxis + speed) || (targetAxis < currentAxis && targetAxis > currentAxis + speed)
 		}
 	}
 	
