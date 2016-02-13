@@ -12,6 +12,8 @@
 		var currentSpeed:Point;
 		var currentMultiplier:int;
 		
+		var gridIndex:Point;
+		
 		static var speed = 5;
 		static var runningMultiplier = 2.25;
 		
@@ -19,6 +21,7 @@
 			keyboardPressed = new Array();
 			
 			lastMovingCurrentSpeed = new Point(0,0);
+			gridIndex = new Point(0,0);
 						
 			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			Main.myStage.addEventListener(KeyboardEvent.KEY_UP, keyUpPressed);
@@ -33,6 +36,7 @@
 			currentMultiplier = 1;
 			currentSpeed = getCurrentSpeed();
 			rotation = getRotation();
+			updateGridIndex();
 			
 			if(keyboardPressed.indexOf(Keyboard.SPACE) >= 0 && !currentSpeed.equals(new Point(0,0))) {
 				currentMultiplier = runningMultiplier;
@@ -86,6 +90,11 @@
 			if (event.keyCode == Keyboard.SPACE) {		
 				removeFromKeyboardPressed(Keyboard.SPACE);
 			}
+		}
+		
+		private function updateGridIndex():void {
+			this.gridIndex.x = (int) (this.x / Level.gridBlocksSize);
+			this.gridIndex.y = (int) (this.y / Level.gridBlocksSize);
 		}
 		
 		private function setAnimation():void {

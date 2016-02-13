@@ -31,6 +31,10 @@
 			setUpExit(100,70);
 			//End Exit
 			
+			createGrid();
+			drawGrid();
+			//printGrid();
+			
 			nextLevel = "Level1"
 		}
 		
@@ -48,6 +52,28 @@
 				Main.myStage.removeChild(zombieList[j]);
 			}
 			//End Zombies
+		}
+		
+		public function createGrid():void {
+			for(var i = 0; i < grid.length; i++) {
+				for(var j = 0; j < grid[0].length; j++) {
+					if(i == 0 || j == 0 || i == grid.length - 1 || j == grid[0].length - 1) {
+						grid[i][j] = 1;
+					}
+					
+					if(i == 5 && j < grid[0].length - 15) {
+						grid[i][j] = 1;
+					}
+					
+					if(j == grid[0].length - 6 && i >= 5) {
+						grid[i][j] = 1;
+					}
+					
+					if(j == grid[0].length - 11 && i <= grid.length - 6) {
+						grid[i][j] = 1;
+					}
+				}
+			}
 		}
 	}
 }

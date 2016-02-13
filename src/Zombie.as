@@ -7,6 +7,8 @@
 		var startHuting:Boolean;
 		
 		var currentSpeed:Point;
+		var gridIndex:Point;
+		var pathToPlayer:Array;
 		
 		public function Zombie() {
 			//Night creatures call
@@ -14,11 +16,16 @@
 			//There's no escapin' the jaws of the alien this time (they're open wide)
 			//This is the end of your life
 			
-			startHuting = false
-			currentSpeed = new Point(0,0)
+			startHuting = false;
+			currentSpeed = new Point(0,0);
+			gridIndex = new Point(0,0);
+			
+			pathToPlayer = new Array();
 		}
 		
 		public function updateZombie(player:Player):void {
+			updateGridIndex();
+			
 			if(startHuting) {
 				goHunting(player)
 			}
@@ -31,6 +38,11 @@
 			
 			this.x += currentSpeed.x
 			this.y += currentSpeed.y
+		}
+		
+		private function updateGridIndex():void {
+			this.gridIndex.x = (int) (this.x / Level.gridBlocksSize);
+			this.gridIndex.y = (int) (this.y / Level.gridBlocksSize);
 		}
 		
 		private function getRotation(player:Player):Number {			
