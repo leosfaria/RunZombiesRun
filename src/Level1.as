@@ -10,7 +10,7 @@
 			wall.x = 800;
 			wall.y = 450;
 			
-			Main.myStage.addChild(wall);
+			//Main.myStage.addChild(wall);
 			wallList.push(wall);
 			//End Walls
 			

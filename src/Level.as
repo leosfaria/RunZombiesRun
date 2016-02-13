@@ -1,7 +1,8 @@
 ﻿package src {
 	import flash.display.MovieClip;
 	import flash.geom.Point;
-	import flash.geom.Vector3D;
+	import flash.utils.Timer;
+	import flash.utils.getTimer;
 	
 	public class Level extends Scene {
 		var floor:Background;
@@ -18,7 +19,8 @@
 		public static var gridBlocksSize = 20; 
 		
 		//Debug vars
-		var blocksPathfinding:Array;	
+		var blocksPathfinding:Array;
+		var zombieBlocksToPlayer:Array;
 		
 		public function Level() {
 			//Start Background
@@ -41,6 +43,7 @@
 			
 			//Start Debug Vars
 			blocksPathfinding = new Array();
+			zombieBlocksToPlayer = new Array();
 			//End Debug Vars
 			
 			oldPositionPlayer = new Point(0,0);
@@ -73,7 +76,16 @@
 			checkCollision();
 			
 			if(!oldPositionPlayer.equals(player.gridIndex)) {
+				var init = getTimer();
 				pathfinding();
+				trace("Time Path Maped em ms: " + (getTimer() - init));
+				
+				init = getTimer();
+				zombieList[0].pathToPlayer = new Array();
+				calculatePathToPlayer(zombieList[0].gridIndex.x, zombieList[0].gridIndex.y, 0);
+				trace("Time Zumbie path maped em ms: " + (getTimer() - init));
+				
+				drawZombiePath(0);
 			}
 			
 			oldPositionPlayer.copyFrom(player.gridIndex);
@@ -81,10 +93,6 @@
 		
 		public function pathfinding():void {
 			gridKeys = new Array();
-			
-			//for(var j = 0; j < zombieList.length; j++) {
-			//	zombiesCoordenates[zombieList[j].gridIndex.x + ',' + zombieList[j].gridIndex.y] = j;
-			//}
 			
 			gridPath = {};
 			
@@ -121,8 +129,34 @@
 			}
 		}
 		
-		private function calculatePathToPlayer(index:String):void {
-			trace(index + ' : ' + gridPath[index]);
+		private function calculatePathToPlayer(xPath:Number, yPath:Number, zombieIndex:Number):void {
+			var distance = gridPath[xPath + ',' + yPath];
+			
+			zombieList[zombieIndex].pathToPlayer.push(new Point(xPath, yPath));
+			
+			if(distance != 0) {
+				if ( isNewIndexCloserThanMe((xPath - 1) + ',' + yPath, distance) ){
+					calculatePathToPlayer(xPath - 1, yPath, zombieIndex);
+				} else if ( isNewIndexCloserThanMe((xPath + 1) + ',' + yPath, distance) ){
+					calculatePathToPlayer(xPath + 1, yPath, zombieIndex);	   
+				} else if ( isNewIndexCloserThanMe(xPath + ',' + (yPath - 1), distance) ){
+					calculatePathToPlayer(xPath, yPath - 1, zombieIndex);   
+				} else if ( isNewIndexCloserThanMe(xPath + ',' + (yPath + 1), distance) ){
+					calculatePathToPlayer(xPath, yPath + 1, zombieIndex);
+				} else if ( isNewIndexCloserThanMe((xPath + 1) + ',' + (yPath + 1), distance) ){
+					calculatePathToPlayer(xPath + 1, yPath + 1, zombieIndex);
+				} else if ( isNewIndexCloserThanMe((xPath + 1) + ',' + (yPath - 1), distance) ){
+					calculatePathToPlayer(xPath + 1, yPath - 1, zombieIndex);
+				} else if ( isNewIndexCloserThanMe((xPath - 1) + ',' + (yPath + 1), distance) ){
+					calculatePathToPlayer(xPath - 1, yPath + 1, zombieIndex);
+				} else if ( isNewIndexCloserThanMe((xPath - 1) + ',' + (yPath - 1), distance) ){
+					calculatePathToPlayer(xPath - 1, yPath - 1, zombieIndex);
+				}
+			}
+		}
+		
+		private function isNewIndexCloserThanMe(newIndex:String, meDistance:int):Boolean {
+			return gridPath.hasOwnProperty(newIndex) && gridPath[newIndex] < meDistance
 		}
 		
 		public function createDefaultGrid():void {
@@ -180,6 +214,34 @@
 					blocksPathfinding.push(block);
 					Main.myStage.addChild(block);
 				}
+			}
+		}
+		
+		//Debug Method
+		public function drawZombiePath(zombieIndex:int):void {
+			var zombie = zombieList[zombieIndex];
+			
+			for(var j = 0; j < zombieBlocksToPlayer.length; j++) {
+				Main.myStage.removeChild(zombieBlocksToPlayer[j]);
+			}
+			
+			zombieBlocksToPlayer = new Array();
+			
+			for(var i = 0; i < zombie.pathToPlayer.length; i++) {
+				var block:BlockPathfinding = new BlockPathfinding();
+				block.x = gridBlocksSize * zombie.pathToPlayer[i].x + block.width / 2;
+				block.y = gridBlocksSize * zombie.pathToPlayer[i].y + block.height / 2;
+				block.alpha = 0.6;
+				block.gotoAndStop(3);
+				
+				if(i == 0) {
+					block.gotoAndStop(4);
+				} else if (i == zombie.pathToPlayer.length - 1) {
+					block.gotoAndStop(5);
+				}
+				
+				zombieBlocksToPlayer.push(block);
+				Main.myStage.addChild(block);
 			}
 		}
 		
