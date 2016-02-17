@@ -3,6 +3,10 @@
 	import flash.geom.Point;
 	
 	public class Zombie extends MovieClip {
+		protected var LONG_DETECTION = 10;
+		protected var MEDIUM_DETECTION = 5;
+		protected var SMALL_DETECTION = 3;
+		
 		var speed:uint;
 		var startHuting:Boolean;
 		
@@ -11,6 +15,8 @@
 		
 		var pathToPlayer:Array;
 		var distanceToPlayer:int;
+		
+		var detectionDistance:int;
 		
 		public function Zombie() {
 			//Night creatures call
