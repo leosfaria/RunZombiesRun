@@ -6,7 +6,7 @@
 			super();
 			
 			this.speed = 2
-			this.detectionDistance = LONG_DETECTION;
+			this.detectionDistance = SMALL_DETECTION;
 		}
 
 	}

@@ -4,8 +4,8 @@
 	
 	public class Zombie extends MovieClip {
 		protected var LONG_DETECTION = 10;
-		protected var MEDIUM_DETECTION = 5;
-		protected var SMALL_DETECTION = 3;
+		protected var MEDIUM_DETECTION = 7;
+		protected var SMALL_DETECTION = 5;
 		
 		var speed:uint;
 		var startHuting:Boolean;

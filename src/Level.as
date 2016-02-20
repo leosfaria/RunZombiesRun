@@ -50,52 +50,6 @@
 			
 			gridPath = {};
 			oldPositionPlayer = new Point(0,0);
-			
-			//Debug
-			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
-		}
-		
-		//Debug
-		public function keyDownPressed (event:KeyboardEvent):void {
-			if (event.keyCode == Keyboard.NUMBER_9) {
-				zombieList[0].detectionDistance = 9;
-			}
-			
-			if (event.keyCode == Keyboard.NUMBER_8) {
-				zombieList[0].detectionDistance = 8;
-			}
-			
-			if (event.keyCode == Keyboard.NUMBER_7) {
-				zombieList[0].detectionDistance = 7;
-			}
-			
-			if (event.keyCode == Keyboard.NUMBER_6) {
-				zombieList[0].detectionDistance = 6;
-			}
-			
-			if (event.keyCode == Keyboard.NUMBER_5) {
-				zombieList[0].detectionDistance = 5;
-			}
-			
-			if (event.keyCode == Keyboard.NUMBER_4) {
-				zombieList[0].detectionDistance = 4;
-			}
-			
-			if (event.keyCode == Keyboard.NUMBER_3) {
-				zombieList[0].detectionDistance = 3;
-			}
-			
-			if (event.keyCode == Keyboard.NUMBER_2) {
-				zombieList[0].detectionDistance = 2;
-			}
-			
-			if (event.keyCode == Keyboard.NUMBER_1) {
-				zombieList[0].detectionDistance = 1;
-			}
-			
-			if (event.keyCode == Keyboard.NUMBER_0) {
-				zombieList[0].detectionDistance = 10;
-			}
 		}
 		
 		override public function removeScene():void { 

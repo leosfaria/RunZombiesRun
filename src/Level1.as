@@ -1,17 +1,19 @@
 ﻿package src {
 	
 	public class Level1 extends Level {
+		private var columnWall1:int;
+		private var columnWall2:int;
+		private var rowWall:int;
 		
 		public function Level1() {
 			super();
 			
-			//Start Walls			
-			var wall = new Wall();
-			wall.x = 800;
-			wall.y = 450;
+			//Start Walls
+			rowWall = 5;
+			columnWall1 = grid[0].length - 6;
+			columnWall2 = grid[0].length - 11;
 			
-			Main.myStage.addChild(wall);
-			wallList.push(wall);
+			setUpWalls();
 			//End Walls
 			
 			//Start Zombies
@@ -24,7 +26,7 @@
 			//End Zombies
 			
 			//Start Player
-			setUpPlayer(910,450);
+			setUpPlayer(950,450);
 			//End Player
 			
 			//Start Exit
@@ -61,19 +63,79 @@
 						grid[i][j] = 1;
 					}
 					
-					if(i == 5 && j < grid[0].length - 15) {
+					if(i == rowWall && j < grid[0].length - 15) {
 						grid[i][j] = 1;
 					}
 					
-					if(j == grid[0].length - 6 && i >= 5) {
+					if(j == columnWall1 && i >= 5) {
 						grid[i][j] = 1;
 					}
 					
-					if(j == grid[0].length - 11 && i <= grid.length - 6) {
+					if(j == columnWall2 && i <= grid.length - 6) {
 						grid[i][j] = 1;
 					}
 				}
 			}
+		}
+		
+		private function setUpWalls():void {
+			//Start Bord Walls
+			var wall = new Wall();
+			wall.x = Level.gridBlocksSize / 2;
+			wall.y = Main.myStage.stageHeight / 2;
+			wall.scaleY = 30;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = (grid[0].length - 1) * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			wall.y = Main.myStage.stageHeight / 2;
+			wall.scaleY = 30;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = Main.myStage.stageWidth / 2;
+			wall.y = Level.gridBlocksSize / 2;
+			wall.scaleX = 50;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = Main.myStage.stageWidth / 2;
+			wall.y = (grid.length - 1) * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			wall.scaleX = 50;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			//End Bord Walls
+			
+			wall = new Wall();
+			wall.x = columnWall1 * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			wall.y = 380;
+			wall.scaleY = 20;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = columnWall2 * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			wall.y = 220;
+			wall.scaleY = 20;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = 300;
+			wall.y = rowWall * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			wall.scaleX = 27;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
 		}
 	}
 }
