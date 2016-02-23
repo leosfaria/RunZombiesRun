@@ -76,7 +76,7 @@
 				
 				zombieList[j].pathToPlayer = new Array();
 				calculatePathToPlayer(zombieList[j].gridIndex.x, zombieList[j].gridIndex.y, zombieList[j].distanceToPlayer, j);
-				drawZombiePath(j);
+				//drawZombiePath(j);
 			}
 			
 			checkCollision();
@@ -325,14 +325,23 @@
 		}
 		
 		private function isPlayerGoingAwayFromCollision(obj:MovieClip):Boolean {
-			var directionX = player.x - obj.x
-			var directionY = player.y - obj.y 
+			var cornerUpperLeft:Point = new Point(obj.x - obj.width/2, obj.y - obj.height / 2);
+			var cornerUpperRight:Point = new Point(obj.x + obj.width/2, obj.y - obj.height / 2);
+			var cornerBottonLeft:Point = new Point(obj.x - obj.width/2, obj.y + obj.height / 2);
+			var cornerBottonRight:Point = new Point(obj.x + obj.width/2, obj.y + obj.height / 2);
 			
-			if(player.currentSpeed.x > 0 && directionX > 0 || player.currentSpeed.x < 0 && directionX < 0) {
-				if(player.currentSpeed.y >= 0 && directionY >= 0 || player.currentSpeed.y <= 0 && directionY <= 0) {
-					return true
-				}
+			if(player.x <= cornerUpperLeft.x && player.currentSpeed.x < 0) {
+				return true;
 			}
+			if(player.x >= cornerUpperRight.x && player.currentSpeed.x > 0) {
+				return true;
+			}
+			if(player.y <= cornerUpperLeft.y && player.currentSpeed.y < 0) {
+				return true;
+			}
+			if(player.y >= cornerBottonLeft.y && player.currentSpeed.y > 0) {
+				return true;
+			}			
 			
 			return false
 		}

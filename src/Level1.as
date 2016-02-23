@@ -18,15 +18,22 @@
 			
 			//Start Zombies
 			var zombie = new Zombie1();
-			zombie.x = 200;
-			zombie.y = 200;
+			zombie.x = 9 * Level.gridBlocksSize;
+			zombie.y = 13 * Level.gridBlocksSize;
+			
+			Main.myStage.addChild(zombie);
+			zombieList.push(zombie);
+			
+			zombie = new Zombie1();
+			zombie.x = 21 * Level.gridBlocksSize;
+			zombie.y = 3 * Level.gridBlocksSize;
 			
 			Main.myStage.addChild(zombie);
 			zombieList.push(zombie);
 			//End Zombies
 			
 			//Start Player
-			setUpPlayer(950,450);
+			setUpPlayer((grid[0].length - 3) * Level.gridBlocksSize, (grid.length - 3) * Level.gridBlocksSize);
 			//End Player
 			
 			//Start Exit
@@ -34,7 +41,7 @@
 			//End Exit
 			
 			createGrid();
-			drawGrid();
+			//drawGrid();
 			//printGrid();
 			
 			nextLevel = "Level1"
