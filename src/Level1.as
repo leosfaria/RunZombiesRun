@@ -41,8 +41,6 @@
 			//End Exit
 			
 			createGrid();
-			//drawGrid();
-			//printGrid();
 			
 			nextLevel = "Level1"
 		}

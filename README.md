@@ -6,6 +6,7 @@ Controles:
 
 - WASD : Movimentação
 - Espaço : Move mais rápido (por enquanto sem restrição, mas fica esperto que a restrição virá) 
+- E: Modo Debug para visualizar o que esta acontecendo no back. (Fica mais lento devido a impressão mesmo, não terá na versão final)
 
 Done:
 
@@ -16,6 +17,8 @@ Done:
 - Lvl 1 
 	- Background (Sem layout)
 	- Player com movimentação (Com layout inicial)
-	- Parede com colisão
+	- Parede com colisão (Sem layout)
 	- Saída (Sem layout)
-	- Zumbi inicial (Sem layout)
+	- Zumbis (Sem layout)
+
+	- Protótipo da fase 1 completo

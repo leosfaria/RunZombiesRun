@@ -23,6 +23,7 @@
 		//Debug vars
 		var blocksPathfinding:Array;
 		var zombieBlocksToPlayer:Array;
+		var debug:Boolean;
 		
 		public function Level() {
 			//Start Background
@@ -43,10 +44,13 @@
 			zombieList = new Array();
 			//End Zombies
 			
-			//Start Debug Vars
+			//Start Debug
 			blocksPathfinding = new Array();
 			zombieBlocksToPlayer = new Array();
-			//End Debug Vars
+			debug = false;
+			
+			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
+			//End Debug
 			
 			gridPath = {};
 			oldPositionPlayer = new Point(0,0);
@@ -76,8 +80,30 @@
 				
 				zombieList[j].pathToPlayer = new Array();
 				calculatePathToPlayer(zombieList[j].gridIndex.x, zombieList[j].gridIndex.y, zombieList[j].distanceToPlayer, j);
-				//drawZombiePath(j);
+				
+				//DEBUG
+				if(debug) {
+					if(j == 0) {
+						erasePath();
+					}
+					
+					drawZombiePath(j);
+				} else {
+					erasePath();
+				}
+				//DEBUG
 			}
+			
+			//DEBUG
+			if(debug) {
+				drawGrid();
+				player.hitBox.visible = true;
+				//printGrid();
+			} else if(player.hitBox.visible) {
+				player.hitBox.visible = false;
+				eraseGrid();
+			}
+			//DEBUG
 			
 			checkCollision();
 			
@@ -190,12 +216,24 @@
 		}
 		
 		//Debug Method
-		public function drawGrid():void {
+		public function keyDownPressed(event:KeyboardEvent):void {
+			if (event.keyCode == Keyboard.E) {		
+				debug = !debug
+			} 
+		}
+		
+		//Debug Method
+		public function eraseGrid():void {
 			for(var k = 0; k < blocksPathfinding.length; k++) {
 				Main.myStage.removeChild(blocksPathfinding[k]);
 			}
 			
 			blocksPathfinding = new Array();
+		}
+		
+		//Debug Method
+		public function drawGrid():void {
+			eraseGrid();
 			
 			for (var i = 0; i < grid.length; i++) {
 				for (var j = 0; j < grid[i].length; j++) {
@@ -223,14 +261,17 @@
 		}
 		
 		//Debug Method
-		public function drawZombiePath(zombieIndex:int):void {
-			var zombie = zombieList[zombieIndex];
-			
+		public function erasePath():void {
 			for(var j = 0; j < zombieBlocksToPlayer.length; j++) {
 				Main.myStage.removeChild(zombieBlocksToPlayer[j]);
 			}
 			
 			zombieBlocksToPlayer = new Array();
+		}
+		
+		//Debug Method
+		public function drawZombiePath(zombieIndex:int):void {
+			var zombie = zombieList[zombieIndex];
 			
 			for(var i = 0; i < zombie.pathToPlayer.length; i++) {
 				var block:BlockPathfinding = new BlockPathfinding();
