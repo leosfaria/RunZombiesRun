@@ -17,6 +17,9 @@
 		var gridPath:Object;
 		var gridKeys:Array;
 		var oldPositionPlayer:Point;
+		var hub:Hub;
+		
+		var runZombieCode:String;
 		
 		public static var gridBlocksSize = 30; 
 		
@@ -44,16 +47,21 @@
 			zombieList = new Array();
 			//End Zombies
 			
+			//Start Hub
+			hub = new Hub();
+			//End Hub
+			
 			//Start Debug
 			blocksPathfinding = new Array();
 			zombieBlocksToPlayer = new Array();
 			debug = false;
-			
-			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			//End Debug
 			
 			gridPath = {};
 			oldPositionPlayer = new Point(0,0);
+			runZombieCode = "";
+			
+			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 		}
 		
 		override public function removeScene():void { 
@@ -69,11 +77,20 @@
 			//Start Exit
 			Main.myStage.removeChild(exit);
 			//End Exit
+			
+			//Start Hub
+			hub.removeHub();
+			//End Hub
+			
+			Main.myStage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 		}
 		
 		override public function updateScene():void {
+			//Start update player status
 			player.updatePlayer();
+			//End update player status
 			
+			//Start update zombies status
 			for (var j = 0; j < zombieList.length ; j++){
 				zombieList[j].updateZombie();
 				zombieList[j].updateDistanceToPlayer(gridPath);
@@ -88,11 +105,16 @@
 					}
 					
 					drawZombiePath(j);
+					zombieList[j].hitBox.visible = true;
 				} else {
-					erasePath();
+					if(zombieList[j].hitBox.visible) {
+						erasePath();
+						zombieList[j].hitBox.visible = false;
+					}
 				}
 				//DEBUG
 			}
+			//End update zombies status
 			
 			//DEBUG
 			if(debug) {
@@ -107,13 +129,19 @@
 			
 			checkCollision();
 			
+			//Calculate pathfinding if necessary
 			if(!oldPositionPlayer.equals(player.gridIndex)) {
 				//var init = getTimer();
 				pathfinding();
 				//trace("Time Path Maped em ms: " + (getTimer() - init));
 			}
 			
+			//Save old position of player in grid to reduce the call of pathfinding
 			oldPositionPlayer.copyFrom(player.gridIndex);
+			
+			//Start updating Hub stuff
+			hub.updateHub();
+			//End updating Hub stuff
 		}
 		
 		public function pathfinding():void {
@@ -202,6 +230,22 @@
 			}
 		}
 		
+		public function keyDownPressed(event:KeyboardEvent):void {
+			//DEBUG
+			if (event.keyCode == Keyboard.E) {		
+				debug = !debug
+			} 
+			//DEBUG
+			
+			runZombieCode += String.fromCharCode(event.charCode);
+			
+			if(runZombieCode.length > 50) {
+				runZombieCode = "";
+			}
+			
+			changeLevelByCode();
+		}
+		
 		//Debug Method
 		public function printGrid():void {
 			for (var i = 0; i < grid.length; i++) {
@@ -213,13 +257,6 @@
 				
 				trace(test);
 			}
-		}
-		
-		//Debug Method
-		public function keyDownPressed(event:KeyboardEvent):void {
-			if (event.keyCode == Keyboard.E) {		
-				debug = !debug
-			} 
 		}
 		
 		//Debug Method
@@ -385,6 +422,70 @@
 			}			
 			
 			return false
+		}
+		
+		private function changeLevelByCode():void {
+			if(runZombieCode.toLowerCase().indexOf("walking dead") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level1";
+			} else if(runZombieCode.toLowerCase().indexOf("dawn of the dead") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level2";
+			} else if(runZombieCode.toLowerCase().indexOf("night of the living dead") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level3";
+			} else if(runZombieCode.toLowerCase().indexOf("world war z") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level4";
+			} else if(runZombieCode.toLowerCase().indexOf("zumbiland") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level5";
+			} else if(runZombieCode.toLowerCase().indexOf("i am legend") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level6";
+			} else if(runZombieCode.toLowerCase().indexOf("resident evil") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level7";
+			} else if(runZombieCode.toLowerCase().indexOf("the return of the living dead") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level8";
+			} else if(runZombieCode.toLowerCase().indexOf("house of the dead") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level9";
+			} else if(runZombieCode.toLowerCase().indexOf("dead rising") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level10";
+			} else if(runZombieCode.toLowerCase().indexOf("28 days later") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level11";
+			} else if(runZombieCode.toLowerCase().indexOf("quarantine") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level12";
+			} else if(runZombieCode.toLowerCase().indexOf("survival of the dead") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level13";
+			} else if(runZombieCode.toLowerCase().indexOf("warm bodies") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level14";
+			} else if(runZombieCode.toLowerCase().indexOf("z nation") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level15";
+			} else if(runZombieCode.toLowerCase().indexOf("infectuz") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level16";
+			} else if(runZombieCode.toLowerCase().indexOf("planet terror") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level17";
+			} else if(runZombieCode.toLowerCase().indexOf("beatlejuice") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level18";
+			} else if(runZombieCode.toLowerCase().indexOf("paranorman") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level19";
+			} else if(runZombieCode.toLowerCase().indexOf("corpse bride") >=0) {
+				Main.sceneChange = true;
+				Main.sceneName = "Level20";
+			}
 		}
 	}
 }

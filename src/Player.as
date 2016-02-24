@@ -16,13 +16,18 @@
 		
 		static var speed = 5;
 		static var runningMultiplier = 2.25;
+		static var stamina;
+		static var maxStamina = 100;
+		static var staminaDownPSec = 30;
+		static var staminaRestorePSec = 15;
 		
 		public function Player() {
 			keyboardPressed = new Array();
 			
 			lastMovingCurrentSpeed = new Point(0,0);
 			gridIndex = new Point(0,0);
-						
+			stamina = maxStamina;
+			
 			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			Main.myStage.addEventListener(KeyboardEvent.KEY_UP, keyUpPressed);
 		}
@@ -39,7 +44,12 @@
 			updateGridIndex();
 			
 			if(keyboardPressed.indexOf(Keyboard.SPACE) >= 0 && !currentSpeed.equals(new Point(0,0))) {
-				currentMultiplier = runningMultiplier;
+				if(stamina > 0) {
+					currentMultiplier = runningMultiplier;
+					stamina -= staminaDownPSec/Main.myStage.frameRate;
+				}
+			} else if(stamina < maxStamina){
+				stamina += staminaRestorePSec/Main.myStage.frameRate;
 			}
 			
 			setAnimation();
