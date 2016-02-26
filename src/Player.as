@@ -16,10 +16,11 @@
 		
 		static var speed = 5;
 		static var runningMultiplier = 2.25;
-		static var stamina;
-		static var maxStamina = 100;
-		static var staminaDownPSec = 30;
-		static var staminaRestorePSec = 15;
+		static var stamina:Number;
+		static var maxStamina:int = 100;
+		static var staminaDownPSec:int = 30;
+		static var staminaRestorePSec:int = 15;
+		static var staminaNeedsRecharge:Boolean = false;
 		
 		public function Player() {
 			keyboardPressed = new Array();
@@ -43,13 +44,19 @@
 			rotation = getRotation();
 			updateGridIndex();
 			
-			if(keyboardPressed.indexOf(Keyboard.SPACE) >= 0 && !currentSpeed.equals(new Point(0,0))) {
-				if(stamina > 0) {
-					currentMultiplier = runningMultiplier;
-					stamina -= staminaDownPSec/Main.myStage.frameRate;
-				}
-			} else if(stamina < maxStamina){
+			if(!staminaNeedsRecharge && keyboardPressed.indexOf(Keyboard.SPACE) >= 0 && !currentSpeed.equals(new Point(0,0))) {
+				currentMultiplier = runningMultiplier;
+				stamina -= staminaDownPSec/Main.myStage.frameRate;
+			} else if(stamina < maxStamina || staminaNeedsRecharge){
 				stamina += staminaRestorePSec/Main.myStage.frameRate;
+			}
+			
+			if(stamina >= maxStamina) {
+				stamina = maxStamina;
+				staminaNeedsRecharge = false;
+			} else if (stamina <= 0) {
+				stamina = 0;
+				staminaNeedsRecharge = true;
 			}
 			
 			setAnimation();
