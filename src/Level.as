@@ -12,6 +12,7 @@
 		var exit:Exit;
 		var wallList:Array;
 		var zombieList:Array;
+		var currentLevel:String;
 		var nextLevel:String;
 		var grid:Array;
 		var gridPath:Object;
@@ -368,14 +369,14 @@
 				if(player.hitBox.hitTestObject(zombieList[j].hitBox)) {
 					//trace('Morri!')
 					
-					Main.sceneChange = true
-					Main.sceneName = nextLevel
+					Main.sceneChange = true;
+					Main.sceneName = currentLevel;
 				}
 			}
 			
 			if(player.hitBox.hitTestObject(exit)) {
-				Main.sceneChange = true
-				Main.sceneName = nextLevel
+				Main.sceneChange = true;
+				Main.sceneName = nextLevel;
 			}
 		}
 		
@@ -486,6 +487,40 @@
 				Main.sceneChange = true;
 				Main.sceneName = "Level20";
 			}
+		}
+		
+		protected function setUpBordWalls():void {
+			var wall = new Wall();
+			wall.x = Level.gridBlocksSize / 2;
+			wall.y = Main.myStage.stageHeight / 2;
+			wall.scaleY = 30;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = (grid[0].length - 1) * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			wall.y = Main.myStage.stageHeight / 2;
+			wall.scaleY = 30;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = Main.myStage.stageWidth / 2;
+			wall.y = Level.gridBlocksSize / 2;
+			wall.scaleX = 50;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = Main.myStage.stageWidth / 2;
+			wall.y = (grid.length - 1) * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			wall.scaleX = 50;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
 		}
 	}
 }
