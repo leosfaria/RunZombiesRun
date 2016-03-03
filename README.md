@@ -19,6 +19,7 @@ Done:
 	- Parede com colisão (Sem layout)
 	- Saída (Sem layout), passando para próxima fase
 	- Zumbis (Sem layout)
+		- Rota dos zumbis
 	- Passwords para ir direto para outras fases 
 	
 - Lvl 1 
@@ -26,3 +27,6 @@ Done:
 
 - Lvl 2
 	- Protótipo da fase 2 completo	
+
+- Lvl 3
+	- Protótipo da fase 3 completo

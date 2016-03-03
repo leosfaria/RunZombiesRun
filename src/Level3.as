@@ -100,7 +100,7 @@
 						grid[i][j] = 1;
 					}
 					
-					if(i == rowWall3 && j <= 7) {
+					if(i == rowWall3 && j <= 8) {
 						grid[i][j] = 1;
 					}
 					
@@ -151,9 +151,9 @@
 			wallList.push(wall);
 			
 			wall = new Wall();
-			wall.x = 105;
+			wall.x = 125;
 			wall.y = rowWall3 * Level.gridBlocksSize + Level.gridBlocksSize / 2;
-			wall.scaleX = 10;
+			wall.scaleX = 11;
 			
 			Main.myStage.addChild(wall);
 			wallList.push(wall);
