@@ -50,7 +50,7 @@
 			createGrid();
 			
 			currentLevel = "Level2";
-			nextLevel = "Level2";
+			nextLevel = "Level3";
 		}
 		
 		override public function removeScene():void { 

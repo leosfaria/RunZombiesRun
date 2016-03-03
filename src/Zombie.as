@@ -13,10 +13,13 @@
 		var currentSpeed:Point;
 		var gridIndex:Point;
 		
+		var routePath:Array;
 		var pathToPlayer:Array;
 		var distanceToPlayer:int;
 		
 		var detectionDistance:int;
+		var nextRoutePointIndex:int;
+		var routeAsc:Boolean;
 		
 		public function Zombie() {
 			//Night creatures call
@@ -28,14 +31,21 @@
 			currentSpeed = new Point(0,0);
 			gridIndex = new Point(0,0);
 			
+			routePath = new Array();
 			pathToPlayer = new Array();
+			
+			nextRoutePointIndex = 1;
+			routeAsc = true;
 		}
 		
 		public function updateZombie():void {
 			updateGridIndex();
 			
 			if(startHuting) {
-				goHunting()
+				walk(pathToPlayer, 1);			//Next point é sempre 1 porque a medida que o zumbi anda, o path vai reduzindo através do update do zumbi, então 1 é sempre o próximo ponto
+			} else if(routePath.length > 1) {
+				walk(routePath, nextRoutePointIndex);	//Neste caso não pois a rota é constante
+				updateRouteIndex();
 			}
 		}
 		
@@ -45,9 +55,8 @@
 			}
 		}
 		
-		public function goHunting():void {
-			//trace('Brains.......')
-			currentSpeed = getCurrentSpeed()
+		public function walk(path:Array, nextPointIndex:int):void {
+			currentSpeed = getCurrentSpeed(path, nextPointIndex)
 			this.rotation = getRotation()
 			
 			this.x += currentSpeed.x
@@ -63,12 +72,12 @@
 			return Math.atan2(-currentSpeed.x, currentSpeed.y) * 180/Math.PI;
 		}
 		
-		private function getCurrentSpeed():Point {
+		private function getCurrentSpeed(path:Array, nextPointIndex:int):Point {
 			var cSpeed = new Point(0,0)
 			
-			if(pathToPlayer.length > 1) {
-				var xPath = pathToPlayer[1].x * Level.gridBlocksSize + Level.gridBlocksSize / 2;
-				var yPath = pathToPlayer[1].y * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			if(path.length > 1) {
+				var xPath = path[nextPointIndex].x * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+				var yPath = path[nextPointIndex].y * Level.gridBlocksSize + Level.gridBlocksSize / 2;
 				
 				if(xPath - this.x > 0) {
 					cSpeed.x = speed
@@ -96,6 +105,23 @@
 		
 		private function willPassTarget(targetAxis:int, currentAxis:int, speed:int):Boolean {
 			return (targetAxis > currentAxis && targetAxis < currentAxis + speed) || (targetAxis < currentAxis && targetAxis > currentAxis + speed)
+		}
+		
+		private function updateRouteIndex():void {
+			//Se eu cheguei no próximo ponto atualiza o indice do próximo ponto
+			if(this.gridIndex.x == routePath[nextRoutePointIndex].x && this.gridIndex.y == routePath[nextRoutePointIndex].y) {
+				if(routePath.length - 1 == nextRoutePointIndex) {
+					routeAsc = false;
+				} else if (nextRoutePointIndex == 0) {
+					routeAsc = true;
+				}
+				
+				if(routeAsc) {
+					nextRoutePointIndex++;
+				} else {
+					nextRoutePointIndex--;
+				}
+			}			
 		}
 	}
 	
