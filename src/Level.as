@@ -27,6 +27,7 @@
 		//Debug vars
 		var blocksPathfinding:Array;
 		var zombieBlocksToPlayer:Array;
+		var zombieRouteBlocks:Array;
 		var debug:Boolean;
 		
 		public function Level() {
@@ -55,6 +56,7 @@
 			//Start Debug
 			blocksPathfinding = new Array();
 			zombieBlocksToPlayer = new Array();
+			zombieRouteBlocks = new Array();
 			debug = false;
 			//End Debug
 			
@@ -83,6 +85,10 @@
 			hub.removeHub();
 			//End Hub
 			
+			eraseGrid();
+			erasePath();
+			eraseRoute();
+			
 			Main.myStage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 		}
 		
@@ -103,13 +109,16 @@
 				if(debug) {
 					if(j == 0) {
 						erasePath();
+						eraseRoute();
 					}
 					
 					drawZombiePath(j);
+					drawZombieRoute(j);
 					zombieList[j].hitBox.visible = true;
 				} else {
 					if(zombieList[j].hitBox.visible) {
 						erasePath();
+						eraseRoute();
 						zombieList[j].hitBox.visible = false;
 					}
 				}
@@ -325,6 +334,31 @@
 				}
 				
 				zombieBlocksToPlayer.push(block);
+				Main.myStage.addChild(block);
+			}
+		}
+		
+		//Debug Method
+		public function eraseRoute():void {
+			for(var j = 0; j < zombieRouteBlocks.length; j++) {
+				Main.myStage.removeChild(zombieRouteBlocks[j]);
+			}
+			
+			zombieRouteBlocks = new Array();
+		}
+		
+		//Debug Method
+		public function drawZombieRoute(zombieIndex:int):void {
+			var zombie = zombieList[zombieIndex];
+			
+			for(var i = 0; i < zombie.routePath.length; i++) {
+				var block:BlockPathfinding = new BlockPathfinding();
+				block.x = gridBlocksSize * zombie.routePath[i].x + block.width / 2;
+				block.y = gridBlocksSize * zombie.routePath[i].y + block.height / 2;
+				block.alpha = 0.6;
+				block.gotoAndStop(6);
+				
+				zombieRouteBlocks.push(block);
 				Main.myStage.addChild(block);
 			}
 		}
