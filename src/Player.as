@@ -4,6 +4,7 @@
 	import flash.utils.Timer;
 	import flash.ui.Keyboard;
 	import flash.geom.Point;
+	import flash.geom.ColorTransform;
 	
 	public class Player extends MovieClip {
 		var keyboardPressed:Array;
@@ -11,6 +12,8 @@
 		var lastMovingCurrentSpeed:Point;
 		var currentSpeed:Point;
 		var currentMultiplier:int;
+		var hairNumber:int;
+		var colorTrans:ColorTransform;
 		
 		var gridIndex:Point;
 		
@@ -29,11 +32,35 @@
 			gridIndex = new Point(0,0);
 			stamina = maxStamina;
 			
+			generateNewPlayer();
+			
 			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			Main.myStage.addEventListener(KeyboardEvent.KEY_UP, keyUpPressed);
 		}
 		
+		private function generateNewPlayer():void {
+			var oldhair:int = 0;
+			
+			this.hairNumber = ((Math.random() * 1000) % 6) + 1;
+			this.colorTrans = new ColorTransform();
+			this.colorTrans.color = PlayerTShirtColor.getRandomColor();
+			
+			if(Main.lastPlayer != null) {
+				if(this.hairNumber == Main.lastPlayer.hairNumber) {
+					if(this.hairNumber == 6) {
+						this.hairNumber = 0;
+					} else {
+						this.hairNumber++;
+					}
+				}
+				
+				this.colorTrans.color = PlayerTShirtColor.getRandomColor(Main.lastPlayer.colorTrans.color);
+			}
+		}
+		
 		public function removePlayer():void {
+			Main.lastPlayer = this;
+			
 			Main.myStage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			Main.myStage.removeEventListener(KeyboardEvent.KEY_UP, keyUpPressed);
 		}
@@ -122,6 +149,9 @@
 			} else {
 				gotoAndStop('run');
 			}
+			
+			this.movieClip.head.gotoAndStop(hairNumber);
+			this.movieClip.randomColor.transform.colorTransform = colorTrans;
 		}
 		
 		private function getRotation():Number {			
