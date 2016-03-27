@@ -402,7 +402,7 @@
 				
 				if(player.hitBox.hitTestObject(zombieList[j].hitBox)) {
 					//trace('Morri!')
-					
+					Main.currentPlayer.isPlayerDead = true;
 					Main.sceneChange = true;
 					Main.sceneName = currentLevel;
 				}

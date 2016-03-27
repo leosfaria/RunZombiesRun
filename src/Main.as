@@ -11,7 +11,8 @@
 		static var sceneChange:Boolean;
 		static var endGame:Boolean;
 		static var loadFinish:Boolean;
-		static var lastPlayer:Player;
+		static var playerLastStatus:Player;
+		static var currentPlayer:Player;
 		
 		var scene:Scene;
 		

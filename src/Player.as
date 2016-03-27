@@ -14,6 +14,7 @@
 		var currentMultiplier:int;
 		var hairNumber:int;
 		var colorTrans:ColorTransform;
+		var isPlayerDead:Boolean;
 		
 		var gridIndex:Point;
 		
@@ -31,35 +32,18 @@
 			lastMovingCurrentSpeed = new Point(0,0);
 			gridIndex = new Point(0,0);
 			stamina = maxStamina;
+			isPlayerDead = false;
 			
 			generateNewPlayer();
 			
 			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			Main.myStage.addEventListener(KeyboardEvent.KEY_UP, keyUpPressed);
-		}
-		
-		private function generateNewPlayer():void {
-			var oldhair:int = 0;
 			
-			this.hairNumber = ((Math.random() * 1000) % 6) + 1;
-			this.colorTrans = new ColorTransform();
-			this.colorTrans.color = PlayerTShirtColor.getRandomColor();
-			
-			if(Main.lastPlayer != null) {
-				if(this.hairNumber == Main.lastPlayer.hairNumber) {
-					if(this.hairNumber == 6) {
-						this.hairNumber = 0;
-					} else {
-						this.hairNumber++;
-					}
-				}
-				
-				this.colorTrans.color = PlayerTShirtColor.getRandomColor(Main.lastPlayer.colorTrans.color);
-			}
+			Main.currentPlayer = this;
 		}
 		
 		public function removePlayer():void {
-			Main.lastPlayer = this;
+			Main.playerLastStatus = this;
 			
 			Main.myStage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
 			Main.myStage.removeEventListener(KeyboardEvent.KEY_UP, keyUpPressed);
@@ -152,6 +136,31 @@
 			
 			this.movieClip.head.gotoAndStop(hairNumber);
 			this.movieClip.randomColor.transform.colorTransform = colorTrans;
+		}
+		
+		private function generateNewPlayer():void {
+			var oldhair:int = 0;
+			
+			if(Main.playerLastStatus == null || Main.playerLastStatus.isPlayerDead) {
+				this.hairNumber = ((Math.random() * 1000) % 6) + 1;
+				this.colorTrans = new ColorTransform();
+				this.colorTrans.color = PlayerTShirtColor.getRandomColor();
+				
+				if(Main.playerLastStatus != null) {
+					if(this.hairNumber == Main.playerLastStatus.hairNumber) {
+						if(this.hairNumber == 6) {
+							this.hairNumber = 0;
+						} else {
+							this.hairNumber++;
+						}
+					}
+					
+					this.colorTrans.color = PlayerTShirtColor.getRandomColor(Main.playerLastStatus.colorTrans.color);
+				}
+			} else {
+				this.hairNumber = Main.playerLastStatus.hairNumber;
+				this.colorTrans = Main.playerLastStatus.colorTrans;
+			}
 		}
 		
 		private function getRotation():Number {			
