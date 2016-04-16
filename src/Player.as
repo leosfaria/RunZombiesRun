@@ -50,30 +50,32 @@
 		}
 		
 		public function updatePlayer():void {
-			currentMultiplier = 1;
-			currentSpeed = getCurrentSpeed();
-			rotation = getRotation();
-			updateGridIndex();
+			if(!isPlayerDead) {
+				currentMultiplier = 1;
+				currentSpeed = getCurrentSpeed();
+				rotation = getRotation();
+				updateGridIndex();
 			
-			if(!staminaNeedsRecharge && keyboardPressed.indexOf(Keyboard.SPACE) >= 0 && !currentSpeed.equals(new Point(0,0))) {
+				if(!staminaNeedsRecharge && keyboardPressed.indexOf(Keyboard.SPACE) >= 0 && !currentSpeed.equals(new Point(0,0))) {
 				currentMultiplier = runningMultiplier;
 				stamina -= staminaDownPSec/Main.myStage.frameRate;
-			} else if(stamina < maxStamina || staminaNeedsRecharge){
-				stamina += staminaRestorePSec/Main.myStage.frameRate;
-			}
-			
-			if(stamina >= maxStamina) {
-				stamina = maxStamina;
-				staminaNeedsRecharge = false;
-			} else if (stamina <= 0) {
-				stamina = 0;
-				staminaNeedsRecharge = true;
+				} else if(stamina < maxStamina || staminaNeedsRecharge){
+					stamina += staminaRestorePSec/Main.myStage.frameRate;
+				}
+				
+				if(stamina >= maxStamina) {
+					stamina = maxStamina;
+					staminaNeedsRecharge = false;
+				} else if (stamina <= 0) {
+					stamina = 0;
+					staminaNeedsRecharge = true;
+				}
+				
+				this.x += currentSpeed.x * currentMultiplier;
+				this.y += currentSpeed.y * currentMultiplier;
 			}
 			
 			setAnimation();
-			
-			this.x += currentSpeed.x * currentMultiplier;
-			this.y += currentSpeed.y * currentMultiplier;
 		}
 		
 		public function keyDownPressed(event:KeyboardEvent):void {
@@ -126,12 +128,16 @@
 		}
 		
 		private function setAnimation():void {
-			if(currentSpeed.x == 0 && currentSpeed.y == 0) {
-				gotoAndStop('idle');
-			} else if(currentMultiplier == 1) {
-				gotoAndStop('walk');
+			if(!isPlayerDead) {
+				if(currentSpeed.x == 0 && currentSpeed.y == 0) {
+					gotoAndStop('idle');
+				} else if(currentMultiplier == 1) {
+					gotoAndStop('walk');
+				} else {
+					gotoAndStop('run');
+				}
 			} else {
-				gotoAndStop('run');
+				gotoAndStop('die');
 			}
 			
 			this.movieClip.head.gotoAndStop(hairNumber);

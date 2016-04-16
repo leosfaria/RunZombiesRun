@@ -400,18 +400,23 @@
 					zombieList[j].startHuting = true
 				}
 				
-				if(player.hitBox.hitTestObject(zombieList[j].hitBox)) {
+				if(player.hitBox.hitTestObject(zombieList[j].hitBox) && !player.isPlayerDead) {
 					//trace('Morri!')
-					Main.currentPlayer.isPlayerDead = true;
-					Main.sceneChange = true;
-					Main.sceneName = currentLevel;
+					player.isPlayerDead = true;
+					//Main.sceneChange = true;
+					//Main.sceneName = currentLevel;
 				}
 			}
 			
-			if(player.hitBox.hitTestObject(exit)) {
+			if(player.hitBox.hitTestObject(exit) && !player.isPlayerDead) {
 				Main.sceneChange = true;
 				Main.sceneName = nextLevel;
 			}
+		}
+		
+		private function restartScene():void {
+			Main.sceneChange = true;
+			Main.sceneName = currentLevel;
 		}
 		
 		private function playerCollision(obj:MovieClip):void {
