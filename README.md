@@ -13,9 +13,14 @@ Done:
 - Logo Inicial (Sem layout)
 - Menu Principal com botao de iniciar jogo (Sem layout)
 - Player:
-	- Animações feitas até aqui: Parado, Andando e Correndo (faltando: Morrendo e Itens)
+	- Animações feitas até aqui: Parado, Andando, Correndo e Morrendo (faltando:  Itens)
 	- Mecanica de stamina sendo gasta para correr
 	- Mecanica de troca de personagem ao morrer
+- Zumbi 1:
+	- Mecânica pronta
+	(Falta layout)
+
+- Faltando Mecanica dos zumbis 2, 3 e 4
 
 - Geral dos Leveis:
 	- Pathfinding com A* para os zumbis irem atras do player espertamente 
@@ -26,7 +31,7 @@ Done:
 	- Zumbis (Sem layout)
 		- Rota dos zumbis
 	- Passwords para ir direto para outras fases 
-	- Sistema de troca de personagem caso Player morra. 
+	- Fadeout ao morrer
 	
 - Lvl 1 
 	- Protótipo da fase 1 completo
@@ -34,3 +39,5 @@ Done:
 	- Protótipo da fase 2 completo	
 - Lvl 3
 	- Protótipo da fase 3 completo
+
+Faltando: Lvl 4 ao 20

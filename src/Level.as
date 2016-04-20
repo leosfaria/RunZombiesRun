@@ -5,6 +5,9 @@
 	import flash.utils.getTimer;
 	import flash.ui.Keyboard;
 	import flash.events.KeyboardEvent;
+	import flash.events.TimerEvent;
+	import com.greensock.*;
+	import com.greensock.easing.*;
 	
 	public class Level extends Scene {
 		var floor:Background;
@@ -19,7 +22,10 @@
 		var gridKeys:Array;
 		var oldPositionPlayer:Point;
 		var hub:Hub;
-		
+		var timer:Timer;
+		var time:int;
+		var gameOverFadeOut:DeathCutScene;
+			
 		var runZombieCode:String;
 		
 		public static var gridBlocksSize = 30; 
@@ -49,6 +55,15 @@
 			zombieList = new Array();
 			//End Zombies
 			
+			//Start GameOver FadeOut
+			gameOverFadeOut = new DeathCutScene();
+			gameOverFadeOut.x = Main.myStage.stageWidth / 2;
+			gameOverFadeOut.y = Main.myStage.stageHeight / 2;
+			gameOverFadeOut.alpha = 0;
+			
+			Main.myStage.addChild(gameOverFadeOut);
+			//End GameOver FadeOut
+			
 			//Start Hub
 			hub = new Hub();
 			//End Hub
@@ -65,6 +80,11 @@
 			runZombieCode = "";
 			
 			Main.myStage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
+			
+			time = 0;
+			timer = new Timer(1000);
+			timer.addEventListener(TimerEvent.TIMER, timerCount);
+			timer.start();
 		}
 		
 		override public function removeScene():void { 
@@ -85,17 +105,26 @@
 			hub.removeHub();
 			//End Hub
 			
+			//Start GameOver FadeOut
+			Main.myStage.removeChild(gameOverFadeOut);
+			//End GameOver FadeOut
+			
 			eraseGrid();
 			erasePath();
 			eraseRoute();
 			
 			Main.myStage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownPressed);
+			timer.removeEventListener(TimerEvent.TIMER, timerCount);
 		}
 		
 		override public function updateScene():void {
 			//Start update player status
 			player.updatePlayer();
 			//End update player status
+			
+			if(player.isPlayerDead) {
+				playDeathAnimation();
+			}
 			
 			//Start update zombies status
 			for (var j = 0; j < zombieList.length ; j++){
@@ -150,8 +179,21 @@
 			oldPositionPlayer.copyFrom(player.gridIndex);
 			
 			//Start updating Hub stuff
-			hub.updateHub();
+			if(!player.isPlayerDead) {
+				hub.updateHub();
+			}
 			//End updating Hub stuff
+		}
+		
+		private function timerCount(e:TimerEvent):void {
+			time++;
+		}
+		
+		private function playDeathAnimation():void {
+			if(player.movieClip.currentFrame == player.movieClip.totalFrames && gameOverFadeOut.alpha == 0) {
+				Main.myStage.addChild(gameOverFadeOut);
+				TweenMax.to(gameOverFadeOut, 1, {alpha:1, onComplete:restartScene});
+			}
 		}
 		
 		public function pathfinding():void {
