@@ -18,9 +18,7 @@ Done:
 	- Mecanica de troca de personagem ao morrer
 - Zumbi 1:
 	- Mecânica pronta
-	(Falta layout)
-
-- Faltando Mecanica dos zumbis 2, 3 e 4
+	(Sem layout)
 
 - Geral dos Leveis:
 	- Pathfinding com A* para os zumbis irem atras do player espertamente 
@@ -40,4 +38,11 @@ Done:
 - Lvl 3
 	- Protótipo da fase 3 completo
 
-Faltando: Lvl 4 ao 20
+Doing:
+ - Mecânica do Zumbi 2
+
+To do:
+
+ - Level 4 ao 20 
+ - Mecanica dos zumbis 3 e 4
+
