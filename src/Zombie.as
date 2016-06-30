@@ -47,6 +47,8 @@
 				walk(routePath, nextRoutePointIndex);	//Neste caso não pois a rota é constante
 				updateRouteIndex();
 			}
+			
+			setAnimation();
 		}
 		
 		public function updateDistanceToPlayer(gridPath:Object):void {
@@ -63,13 +65,21 @@
 			this.y += currentSpeed.y
 		}
 		
+		private function setAnimation():void {
+			if(this.currentSpeed.x == 0 && this.currentSpeed.y == 0) {
+				gotoAndStop('idle');
+			} else {
+				gotoAndStop('walk');
+			}
+		}
+		
 		private function updateGridIndex():void {
 			this.gridIndex.x = (int) (this.x / Level.gridBlocksSize);
 			this.gridIndex.y = (int) (this.y / Level.gridBlocksSize);
 		}
 		
 		private function getRotation():Number {			
-			return Math.atan2(-currentSpeed.x, currentSpeed.y) * 180/Math.PI;
+			return Math.atan2(currentSpeed.x, -currentSpeed.y) * 180/Math.PI;
 		}
 		
 		private function getCurrentSpeed(path:Array, nextPointIndex:int):Point {

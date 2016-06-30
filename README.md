@@ -18,15 +18,15 @@ Done:
 	- Mecanica de troca de personagem ao morrer
 - Zumbi 1:
 	- Mecânica pronta
-	(Sem layout)
+	- Animações: Parado, Andando
 
 - Geral dos Leveis:
 	- Pathfinding com A* para os zumbis irem atras do player espertamente 
 	- Background (Sem layout)
 	- Player com movimentação (Com layout inicial)
-	- Parede com colisão (Sem layout)
+	- Parede com colisão (Hit Box)
 	- Saída (Sem layout), passando para próxima fase
-	- Zumbis (Sem layout)
+	- Zumbis (Com layout inicial)
 		- Rota dos zumbis
 	- Passwords para ir direto para outras fases 
 	- Fadeout ao morrer
@@ -37,12 +37,3 @@ Done:
 	- Protótipo da fase 2 completo	
 - Lvl 3
 	- Protótipo da fase 3 completo
-
-Doing:
- - Mecânica do Zumbi 2
-
-To do:
-
- - Level 4 ao 20 
- - Mecanica dos zumbis 3 e 4
-
