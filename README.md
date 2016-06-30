@@ -8,6 +8,28 @@ Controles:
 - Espaço : Move mais rápido , mas gasta stamina
 - E: Modo Debug para visualizar o que esta acontecendo no back. (Fica mais lento devido a impressão mesmo, não terá na versão final)
 
+Zumbie Code: (Don´t cheat! For tests only!)
+- Level 1: walking dead
+- Level 2: dawn of the dead
+- Level 3: night of the living dead
+- Level 4: world war z
+- Level 5: zumbiland
+- Level 6: i am legend
+- Level 7: resident evil
+- Level 8: the return of the living dead
+- Level 9: house of the dead
+- Level 10: dead rising
+- Level 11: 28 days later
+- Level 12: quarantine
+- Level 13: survival of the dead
+- Level 14: warm bodies
+- Level 15: z nation
+- Level 16: infectuz
+- Level 17: planet terror
+- Level 18: beatlejuice
+- Level 19: paranorman
+- Level 20: corpse bride
+
 Done:
 
 - Logo Inicial (Sem layout)

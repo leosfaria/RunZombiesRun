@@ -4,6 +4,8 @@
 		private var columnWall:int;
 		private var rowWall1:int;
 		private var rowWall2:int;
+		private var rowWall3:int;
+		private var rowWall4:int;
 		
 		public function Level2() {
 			super();
@@ -11,6 +13,8 @@
 			//Start Walls
 			rowWall1 = grid.length - grid.length / 2;
 			rowWall2 = grid.length - 5;
+			rowWall3 = grid.length - grid.length / 2;
+			rowWall4 = 5;
 			columnWall = grid[0].length - 13;
 			
 			setUpWalls();
@@ -84,7 +88,15 @@
 						grid[i][j] = 1;
 					}
 					
-					if(j == columnWall && i <= grid.length - 6) {
+					if(i == rowWall3 && j >= 13 && j <= 20) {
+						grid[i][j] = 1;
+					}
+					
+					if(i == rowWall4 && j >= 1 && j <= 8) {
+						grid[i][j] = 1;
+					}
+					
+					if(j == columnWall && i <= grid.length - 4) {
 						grid[i][j] = 1;
 					}
 				}
@@ -96,8 +108,8 @@
 			
 			var wall = new Wall();
 			wall.x = columnWall * Level.gridBlocksSize + Level.gridBlocksSize / 2;
-			wall.y = 220;
-			wall.scaleY = 20;
+			wall.y = 235;
+			wall.scaleY = 21;
 			
 			Main.myStage.addChild(wall);
 			wallList.push(wall);
@@ -114,6 +126,22 @@
 			wall.x = 345;
 			wall.y = rowWall2 * Level.gridBlocksSize + Level.gridBlocksSize / 2;
 			wall.scaleX = 17;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = 530;
+			wall.y = rowWall3 * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			wall.scaleX = 12;
+			
+			Main.myStage.addChild(wall);
+			wallList.push(wall);
+			
+			wall = new Wall();
+			wall.x = 130;
+			wall.y = rowWall4 * Level.gridBlocksSize + Level.gridBlocksSize / 2;
+			wall.scaleX = 12;
 			
 			Main.myStage.addChild(wall);
 			wallList.push(wall);
