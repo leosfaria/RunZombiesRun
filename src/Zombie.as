@@ -54,7 +54,30 @@
 		public function updateDistanceToPlayer(gridPath:Object):void {
 			if(gridPath.hasOwnProperty(this.gridIndex.x + ',' + this.gridIndex.y)) {
 				distanceToPlayer = gridPath[this.gridIndex.x + ',' + this.gridIndex.y]
+			} else { //Caso minha posição não exista na grid "dentro da parede" minha distancia será a menor distancia dos quadrados adjacentes + 1
+				distanceToPlayer = findCloserDistance(gridPath);
 			}
+		}
+		
+		private function findCloserDistance(gridPath:Object):int {
+			var array = [gridPath[(this.gridIndex.x - 1) + ',' + this.gridIndex.y],
+							gridPath[this.gridIndex.x + ',' + (this.gridIndex.y - 1)],
+							gridPath[(this.gridIndex.x + 1) + ',' + this.gridIndex.y],
+							gridPath[this.gridIndex.x + ',' + (this.gridIndex.y + 1)],
+							gridPath[(this.gridIndex.x - 1) + ',' + (this.gridIndex.y - 1)],
+							gridPath[(this.gridIndex.x - 1) + ',' + (this.gridIndex.y + 1)],
+							gridPath[(this.gridIndex.x + 1) + ',' + (this.gridIndex.y - 1)],
+							gridPath[(this.gridIndex.x + 1) + ',' + (this.gridIndex.y + 1)]]
+			
+			var minValue = 99999;
+			
+			for(var i = 0; i < array.length; i++) {
+				if(array[i] >= 1 && array[i] < minValue) {
+					minValue = array[i];
+				}
+			}
+			
+			return minValue + 1;
 		}
 		
 		public function walk(path:Array, nextPointIndex:int):void {
