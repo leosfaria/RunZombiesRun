@@ -54,6 +54,7 @@
 			if(sceneName == "Level1") scene = new Level1();
 			if(sceneName == "Level2") scene = new Level2();
 			if(sceneName == "Level3") scene = new Level3();
+			if(sceneName == "Level4") scene = new Level4();
 			//if(sceneName == "Game Over") scene = new GameOver();
 		}
 	}
