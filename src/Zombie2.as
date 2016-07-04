@@ -5,7 +5,7 @@
 		public function Zombie2() {
 			super();
 			
-			this.speed = 2
+			this.speed = 4
 			this.detectionDistance = MEDIUM_DETECTION;
 		}
 

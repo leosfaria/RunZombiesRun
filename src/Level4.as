@@ -19,7 +19,7 @@
 			//End Walls
 			
 			//Start Zombies
-			var zombie = new Zombie1();
+			var zombie = new Zombie2();
 			zombie.x = 14 * Level.gridBlocksSize;
 			zombie.y = 17 * Level.gridBlocksSize;
 			//zombie.routePath.push(new Point(14,17), new Point(15,17), new Point(16,17), new Point(17,17), new Point(18,17), new Point(19,17), new Point(20,17), new Point(21,17), new Point(22,17),
@@ -91,6 +91,10 @@
 					
 					if(i == rowWall && j < grid[0].length - 6) {
 						grid[i][j] = 1;
+						
+						if(j == grid[0].length - 8) {
+							grid[i + 1][j] = 1;
+						}
 					}
 					
 					if(j == columnWall1 && i < 6) {

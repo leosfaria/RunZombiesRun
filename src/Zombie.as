@@ -88,7 +88,7 @@
 			this.y += currentSpeed.y
 		}
 		
-		private function setAnimation():void {
+		private function setAnimation():void {			
 			if(this.currentSpeed.x == 0 && this.currentSpeed.y == 0) {
 				gotoAndStop('idle');
 			} else {
