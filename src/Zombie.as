@@ -38,6 +38,8 @@
 			routeAsc = true;
 		}
 		
+		public function removeZombie():void {}	//Filhos devem sobrescrever essa função para remover o que inserirem
+		
 		public function updateZombie():void {
 			updateGridIndex();
 			

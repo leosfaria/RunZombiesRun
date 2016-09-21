@@ -18,8 +18,16 @@
 			setUpWalls();
 			//End Walls
 			
+			//Start Player
+			setUpPlayer((grid[0].length - 3) * Level.gridBlocksSize, (grid.length - 6) * Level.gridBlocksSize);
+			//End Player
+			
+			//Start Exit
+			setUpExit(4 * Level.gridBlocksSize, 2 * Level.gridBlocksSize);
+			//End Exit
+			
 			//Start Zombies
-			var zombie = new Zombie2();
+			var zombie = new Zombie2(this.player);
 			zombie.x = 14 * Level.gridBlocksSize;
 			zombie.y = 17 * Level.gridBlocksSize;
 			//zombie.routePath.push(new Point(14,17), new Point(15,17), new Point(16,17), new Point(17,17), new Point(18,17), new Point(19,17), new Point(20,17), new Point(21,17), new Point(22,17),
@@ -51,14 +59,6 @@
 			//Main.myStage.addChild(zombie);
 			//zombieList.push(zombie);
 			//End Zombies
-			
-			//Start Player
-			setUpPlayer((grid[0].length - 3) * Level.gridBlocksSize, (grid.length - 6) * Level.gridBlocksSize);
-			//End Player
-			
-			//Start Exit
-			setUpExit(4 * Level.gridBlocksSize, 2 * Level.gridBlocksSize);
-			//End Exit
 			
 			createGrid();
 			
@@ -121,7 +121,7 @@
 			
 			wall = new Wall();
 			wall.x = columnWall2 * Level.gridBlocksSize + Level.gridBlocksSize / 2;
-			wall.y = 350;
+			wall.y = 345;
 			wall.scaleY = 7;
 			
 			Main.myStage.addChild(wall);

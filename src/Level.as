@@ -97,6 +97,12 @@
 			Main.myStage.removeChild(player);
 			//End Player
 			
+			//Start Zombies
+			for(var i = 0; i < zombieList.length; i++) {
+				zombieList[i].removeZombie();
+			}
+			//End Zombies
+			
 			//Start Exit
 			Main.myStage.removeChild(exit);
 			//End Exit
