@@ -3,6 +3,7 @@
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.geom.Point;
 	
 	public class Main extends MovieClip {
 		static var myStage:Stage;
@@ -56,6 +57,12 @@
 			if(sceneName == "Level3") scene = new Level3();
 			if(sceneName == "Level4") scene = new Level4();
 			//if(sceneName == "Game Over") scene = new GameOver();
+		}
+		
+		static public function normalizeVector(vector:Point):Point {
+			var mag = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
+			
+			return new Point(vector.x / mag, vector.y / mag);
 		}
 	}
 }

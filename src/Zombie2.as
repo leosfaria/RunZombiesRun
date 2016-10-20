@@ -9,18 +9,19 @@
 		private var player:Player;
 		private var timer:Timer;
 		private var jump:Boolean;
+		private var playerVector:Point;
+		private var playerNormilizedVector:Point;
 		
 		protected var JUMP_DISTANCE:int;
 		protected var jumpSpeed:int;
 		protected var isReadyToJump:Boolean;
-		
 		
 		public function Zombie2(player:Player) {
 			super();
 			
 			this.player = player;
 			this.speed = 4
-			this.jumpSpeed = this.speed * 4
+			this.jumpSpeed = this.speed * 5
 			this.detectionDistance = MEDIUM_DETECTION;
 			this.JUMP_DISTANCE = this.detectionDistance - 3;
 			this.isReadyToJump = false;
@@ -49,21 +50,21 @@
 		
 		private function timerCount(e:TimerEvent):void {
 			jump = true;
+			playerNormilizedVector = Main.normalizeVector(playerVector);
 			timer.stop();
 		}
 		
 		private function jumpAction():void {
 			if(!jump) {
-				setRotation();
-			} else {
-				trace("JUMP!!");
+				playerVector = new Point(player.x - this.x, player.y - this.y);
+				
+				this.rotation = Math.atan2(playerVector.x, -playerVector.y) * 180/Math.PI;
+			} else {				
+				this.x += playerNormilizedVector.x * jumpSpeed;
+				this.y += playerNormilizedVector.y * jumpSpeed;
+				
+				trace("JUMP!!" + playerNormilizedVector);
 			}
-		}
-		
-		private function setRotation():void {
-			var playerVector:Point = new Point(player.x - this.x, player.y - this.y);
-			
-			this.rotation = Math.atan2(playerVector.x, -playerVector.y) * 180/Math.PI;
 		}
 	}
 	
