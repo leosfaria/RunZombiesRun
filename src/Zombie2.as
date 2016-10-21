@@ -11,6 +11,7 @@
 		private var jump:Boolean;
 		private var playerVector:Point;
 		private var playerNormilizedVector:Point;
+		private var jumpDistanceLength:int;
 		
 		protected var JUMP_DISTANCE:int;
 		protected var jumpSpeed:int;
@@ -56,14 +57,19 @@
 		
 		private function jumpAction():void {
 			if(!jump) {
+				jumpDistanceLength = 10;
 				playerVector = new Point(player.x - this.x, player.y - this.y);
 				
 				this.rotation = Math.atan2(playerVector.x, -playerVector.y) * 180/Math.PI;
 			} else {				
-				this.x += playerNormilizedVector.x * jumpSpeed;
-				this.y += playerNormilizedVector.y * jumpSpeed;
-				
-				trace("JUMP!!" + playerNormilizedVector);
+				if(jumpDistanceLength > 0) {
+					this.x += playerNormilizedVector.x * jumpSpeed;
+					this.y += playerNormilizedVector.y * jumpSpeed;
+					
+					jumpDistanceLength--;
+				} else {
+					trace("Miss..");
+				}
 			}
 		}
 	}
